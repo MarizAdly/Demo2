@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/base"
+    android:orientation="vertical"
+    tools:context=".Activities.RegisterActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/back"
+                    style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="false"
+                    android:onClick="back"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
+
+                <TextView
+                    android:id="@+id/titleView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:fontFamily="cursive"
+                    android:padding="10dp"
+                    android:text="Create Acount"
+                    android:textColor="#f00000"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="false"
+                android:alpha="0.75"
+                android:cropToPadding="false"
+                android:drawingCacheQuality="auto"
+                android:scaleType="centerCrop"
+                android:src="@drawable/facebook_avatar"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/uploadView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:drawableLeft="@drawable/ic_edit_white"
+                android:fontFamily="@font/capriola"
+                android:onClick="addImg"
+                android:text="Upload Photo"
+                android:textColor="#FFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/userNameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:alpha="0.40"
+                android:background="@drawable/squircle_btn"
+                android:backgroundTint="#DE1515"
+                android:drawableLeft="@drawable/nn"
+                android:fontFamily="@font/capriola"
+                android:hint="   Full name"
+                android:inputType="textPersonName"
+                android:paddingLeft="5dp"
+                android:textColor="@android:color/background_light"
+                android:textColorHint="#ffff"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:id="@+id/emailAddEdit"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.40"
+                android:background="@drawable/squircle_btn"
+                android:backgroundTint="#DE1515"
+                android:drawableLeft="@drawable/ic_email_black_24dp"
+                android:fontFamily="@font/capriola"
+                android:hint="   Email Address"
+                android:inputType="textWebEmailAddress"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/background_light"
+                android:textColorHint="#ffff"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/phoneNoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.40"
+                android:background="@drawable/squircle_btn"
+                android:backgroundTint="#DE1515"
+                android:drawableLeft="@drawable/phone"
+                android:fontFamily="@font/capriola"
+                android:hint="   Phone No."
+                android:inputType="phone"
+                android:textColor="@android:color/background_light"
+                android:textColorHint="#ffff"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/passWordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.40"
+                android:background="@drawable/squircle_btn"
+                android:backgroundTint="#DE1515"
+                android:drawableLeft="@drawable/lock"
+                android:fontFamily="@font/capriola"
+                android:hint=" Password"
+                android:inputType="textPassword"
+                android:textColor="@android:color/background_light"
+                android:textColorHint="#ffff"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:id="@+id/bdEdit"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.40"
+                android:background="@drawable/squircle_btn"
+                android:drawableLeft="@drawable/calender"
+                android:fontFamily="@font/capriola"
+                android:hint="   Birth Date"
+                android:inputType="date"
+                android:textColor="@android:color/background_light"
+                android:textColorHint="#ffff"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/addressEdit"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.40"
+                android:background="@drawable/squircle_btn"
+                android:backgroundTint="#DE1515"
+                android:drawableLeft="@drawable/loc"
+                android:fontFamily="@font/capriola"
+                android:hint="   Address"
+                android:inputType="textPostalAddress"
+                android:textColor="@android:color/background_light"
+                android:textColorHint="#ffff"
+                android:textSize="20dp" />
+
+
+            <Button
+                android:id="@+id/homeLocation"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/round_btn"
+                android:fontFamily="@font/capriola"
+                android:onClick="getLocation"
+                android:text="Get Home Location"
+                android:textColor="#FBF9F9"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/signup"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/squirclebtn2"
+                android:fontFamily="@font/capriola"
+                android:onClick="signup"
+                android:text="Sign Up"
+                android:textColor="#FBF9F9"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
