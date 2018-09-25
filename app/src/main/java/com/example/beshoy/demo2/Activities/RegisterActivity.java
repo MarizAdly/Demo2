@@ -5,12 +5,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -36,15 +33,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -103,12 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             imageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                profileView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Picasso.get ().load ( imageUri ).into ( profileView );
         }
     }
 
@@ -206,12 +199,28 @@ public class RegisterActivity extends AppCompatActivity {
                                 progressDialog.setTitle("Uploading...");
                                 progressDialog.show();
 
-                                StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+                                final StorageReference ref = storageReference.child("images/" ).child ( imageUri.getLastPathSegment () );
                                 ref.putFile(imageUri)
                                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                             @Override
                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                 progressDialog.dismiss();
+
+                                                FirebaseDatabase database = FirebaseDatabase.getInstance ( );
+                                                DatabaseReference myRef = database.getReference ( "users" );
+
+                                                user.setDisplayName(userNameEdit.getText().toString());
+                                                user.setBirthDate(bdEdit.getText().toString());
+                                                user.setEmailAddress(emailAddEdit.getText().toString());
+                                                user.setPhoneNo(phoneNoEdit.getText().toString());
+                                                user.setAddress ( addressEdit.getText ().toString () );
+                                                user.setUserImage ( ref.toString () );
+                                                user.setUID(mAuth.getCurrentUser().getUid());
+                                                user.setuLat(latLoc);
+                                                user.setUlng(lngLoc);
+
+                                                myRef.push().setValue(user);
+
 
                                             }
                                         })
@@ -219,6 +228,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 progressDialog.dismiss();
+                                                Toast.makeText ( RegisterActivity.this, e.getMessage (), Toast.LENGTH_LONG ).show ();
                                             }
                                         })
                                         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -230,23 +240,6 @@ public class RegisterActivity extends AppCompatActivity {
                                             }
                                         });
                             }
-
-
-
-                            FirebaseDatabase database = FirebaseDatabase.getInstance ( );
-                            DatabaseReference myRef = database.getReference ( "users" );
-
-
-                            user.setDisplayName(userNameEdit.getText().toString());
-                            user.setBirthDate(bdEdit.getText().toString());
-                            user.setEmailAddress(emailAddEdit.getText().toString());
-                            user.setPhoneNo(phoneNoEdit.getText().toString());
-                            user.setUID(mAuth.getCurrentUser().getUid());
-                            user.setuLat(latLoc);
-                            user.setUlng(lngLoc);
-                            user.setUserImage(profileView.getImageMatrix().toString());
-
-                            myRef.push().setValue(user);
 
                             Toast.makeText ( RegisterActivity.this, "Authentication succeeded.",
                                     Toast.LENGTH_SHORT ).show ( );

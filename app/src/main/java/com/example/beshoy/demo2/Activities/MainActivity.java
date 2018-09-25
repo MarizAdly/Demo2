@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance ( );
         DatabaseReference myRef = database.getReference ( "users" );
-        myRef.push ( ).setValue ( "user" );
+        myRef.push().setValue("user");
 
     }
 

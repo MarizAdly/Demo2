@@ -1,15 +1,42 @@
 package com.example.beshoy.demo2.Models;
 
-import android.net.Uri;
-import android.opengl.Matrix;
-
 import java.io.Serializable;
-import java.net.URI;
 import java.net.URL;
 
 public class Post implements Serializable {
-    private String DisplayName;
+
+
+    private String postPhoto, userPhoto;
     private String postText;
+
+    public String getUserPhoto ( ) {
+        return userPhoto;
+    }
+
+    public void setUserPhoto ( String userPhoto ) {
+        this.userPhoto = userPhoto;
+    }
+
+    public String getUserName ( ) {
+        return userName;
+    }
+
+    public void setUserName ( String userName ) {
+        this.userName = userName;
+    }
+
+    private String userName;
+    private String userID;
+
+    public Post(){
+
+    }
+
+    public Post(String postDesc, String imgURL , String UID ) {
+        postText = postDesc;
+        postPhoto = imgURL;
+        userID = UID;
+    }
 
     public String getUserID() {
         return userID;
@@ -19,32 +46,12 @@ public class Post implements Serializable {
         this.userID = userID;
     }
 
-    private String userID;
-
-    public URL getUserImage() {
-        return UserImage;
-    }
-
-    public void setUserImage(URL userImage) {
-        UserImage = userImage;
-    }
-
-    public URL getPostPhoto() {
+    public String getPostPhoto ( ) {
         return postPhoto;
     }
 
-    public void setPostPhoto(URL postPhoto) {
+    public void setPostPhoto ( String postPhoto ) {
         this.postPhoto = postPhoto;
-    }
-
-    private URL UserImage, postPhoto;
-
-    public String getDisplayName() {
-        return DisplayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        DisplayName = displayName;
     }
 
     public String getPostText() {

@@ -2,9 +2,7 @@ package com.example.beshoy.demo2.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,25 +18,29 @@ import com.example.beshoy.demo2.Models.User;
 import com.example.beshoy.demo2.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.UUID;
 
 public class AddPostActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
 
-    String UserId;
-    FirebaseStorage firebaseStorage;
-    DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    FirebaseStorage storage;
     StorageReference storageReference;
+    FirebaseDatabase database;
+
+
     Post post;
     User user;
 
@@ -54,9 +56,9 @@ public class AddPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
-        post = new Post();
-        user = new User();
 
+        post = new Post();
+    user = new User();
 
         title = findViewById(R.id.titleView);
         postText = findViewById(R.id.postText);
@@ -64,64 +66,16 @@ public class AddPostActivity extends AppCompatActivity {
         camera = findViewById(R.id.addPhoto);
         addpost = findViewById(R.id.addPost);
         cancel = findViewById(R.id.cancel);
-        userImage = findViewById(R.id.userImage);
-        personName = findViewById(R.id.personName);
+
 
         Intent addpost = getIntent();
-
-        Picasso.get().load(user.getUserImage()).into(userImage);
-        Picasso.get().load(String.valueOf(post.getPostPhoto())).into(postImage);
+        storage = FirebaseStorage.getInstance ();
+        storageReference = storage.getReference ();
     }
 
     public void cancelPost(View view) {
         Intent intent = new Intent(AddPostActivity.this, HomeActivity.class);
         startActivity(intent);
-    }
-
-    public void addPost(View view) {
-        mAuth = FirebaseAuth.getInstance();
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("posts");
-
-        if (imageUri!= null) {
-            final ProgressDialog progressDialog = new ProgressDialog(AddPostActivity.this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
-            ref.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                        }
-                    });
-        }
-        post.setUserID(mAuth.getCurrentUser().getUid());
-        post.setPostText(postText.getText().toString());
-
-
-        myRef.push().setValue(post);
-
-        Toast.makeText(AddPostActivity.this, "Post Added.",
-                Toast.LENGTH_SHORT).show();
-
     }
 
     public void addPostImage(View view) {
@@ -139,12 +93,62 @@ public class AddPostActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             imageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                postImage.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Picasso.get ().load(imageUri).into(postImage);
         }
     }
+
+    public void addPost(View view) {
+        mAuth = FirebaseAuth.getInstance();
+        if (imageUri!= null && user!=null || postText != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(AddPostActivity.this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            final StorageReference ref = storageReference.child("uploads/" ).child(imageUri.getLastPathSegment ());
+            ref.putFile(imageUri)
+
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess( final UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss ( );
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("posts");
+
+                            post.setPostText(postText.getText().toString());
+                            post.setPostPhoto (ref.toString ());
+                            post.setUserID (mAuth.getCurrentUser ().getUid ());
+
+                            myRef.push ().setValue ( post );
+    }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        }
+                    });
+            Toast.makeText(AddPostActivity.this, "Post Added.", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent ( AddPostActivity.this, HomeActivity.class );
+            intent.putExtra ( "posts", post );
+            startActivity ( intent );
+
+        }
+        else
+        {
+            Toast.makeText ( AddPostActivity.this, "No file is selected",Toast.LENGTH_SHORT).show ();
+        }
+
+
+    }
+
+
 }

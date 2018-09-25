@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "718901710587-03g2hnhhmf3atrk24gvvu6qhifa53jf8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.beshoy.demo2",
+            "certificate_hash": "9d9d19a24342f9f72a0ef747a803093040e53bc4"
+          }
+        },
+        {
           "client_id": "718901710587-7do35mt1arqse8i66gc7v0csjepalpd2.apps.googleusercontent.com",
           "client_type": 3
         }

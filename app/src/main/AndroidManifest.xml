@@ -20,20 +20,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity android:name=".Activities.MainActivity">
-        </activity>
-        <activity android:name=".Activities.WelcomeActivity">
-
-        </activity>
-        <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.HomeActivity" />
-        <activity android:name=".Activities.ForgetPassActivity" />
-        <activity android:name=".Activities.AddPostActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.WelcomeActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.HomeActivity" />
+        <activity android:name=".Activities.ForgetPassActivity" />
+        <activity android:name=".Activities.AddPostActivity" />
+        <activity android:name=".Activities.UsersListActivity" />
+        <activity android:name=".Activities.ProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,21 @@ public class User implements Serializable {
     private String EmailAddress;
     private String PhoneNo;
     private String UID;
+    private  String Address;
+    private String UserImage;
+    private double uLat;
+    private double ulng;
+
+
+    public String getAddress ( ) {
+        return Address;
+    }
+
+    public void setAddress ( String address ) {
+        Address = address;
+    }
+
+
 
     public String getUserImage() {
         return UserImage;
@@ -18,10 +33,6 @@ public class User implements Serializable {
     public void setUserImage(String userImage) {
         UserImage = userImage;
     }
-
-    private String UserImage;
-    private double uLat;
-    private double ulng;
 
     public String getDisplayName() {
         return DisplayName;

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ProfileActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:alpha="0.65"
+            android:background="#DE1515"
+            android:orientation="vertical">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileView"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:drawingCacheQuality="auto"
+                android:scaleType="centerCrop"
+                android:src="@drawable/facebook_avatar"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="165dp"
+            android:background="@drawable/round_btn"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/callBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/round_btn"
+                    android:cropToPadding="false"
+                    android:onClick="call"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_call_black_24dp" />
+
+                <ImageButton
+                    android:id="@+id/msgBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/round_btn"
+                    android:cropToPadding="false"
+                    android:onClick="msg"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_message_black_24dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/locationBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/round_btn"
+                    android:cropToPadding="false"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_location_on_black_24dp"
+                    android:onClick="locate"/>
+
+            </LinearLayout>
+        </android.support.design.widget.BottomNavigationView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/nameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="Name: "
+                android:textSize="20dp"
+                android:fontFamily="@font/capriola"
+                android:textColor="#F000"/>
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:fontFamily="@font/capriola"
+                android:textSize="25dp"
+                android:textColor="#F000"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/phoneView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="Phone: "
+                android:textSize="20dp"
+                android:fontFamily="@font/capriola"
+                android:textColor="#F000"/>
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:fontFamily="@font/capriola"
+                android:textSize="25dp"
+                android:textColor="#F000"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/bdView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="Birth Date: "
+                android:textSize="20dp"
+                android:fontFamily="@font/capriola"
+                android:textColor="#F000"/>
+
+            <TextView
+                android:id="@+id/birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:fontFamily="@font/capriola"
+                android:textSize="25dp"
+                android:textColor="#F000"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/addressView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="Address: "
+                android:textSize="20dp"
+                android:fontFamily="@font/capriola"
+                android:textColor="#F000"/>
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="  "
+                android:fontFamily="@font/capriola"
+                android:textSize="25dp"
+                android:textColor="#F000"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="115dp"
+            android:onClick="Home"
+            android:src="@drawable/ic_home_white"
+            app:backgroundTint="@android:color/holo_red_dark" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="115dp"
+            android:onClick="friends"
+            android:src="@drawable/ic_people_white"
+            app:backgroundTint="@android:color/holo_red_dark" />
+    </RelativeLayout>
+
+</LinearLayout>

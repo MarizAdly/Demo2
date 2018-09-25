@@ -120,24 +120,7 @@
                 android:textColorHint="#ffff"
                 android:textSize="20dp" />
 
-            <EditText
-                android:id="@+id/phoneNoEdit"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:alpha="0.40"
-                android:background="@drawable/squircle_btn"
-                android:backgroundTint="#DE1515"
-                android:drawableLeft="@drawable/phone"
-                android:fontFamily="@font/capriola"
-                android:hint="   Phone No."
-                android:inputType="phone"
-                android:textColor="@android:color/background_light"
-                android:textColorHint="#ffff"
-                android:textSize="20dp" />
+
 
             <EditText
                 android:id="@+id/passWordEdit"
@@ -154,6 +137,25 @@
                 android:fontFamily="@font/capriola"
                 android:hint=" Password"
                 android:inputType="textPassword"
+                android:textColor="@android:color/background_light"
+                android:textColorHint="#ffff"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/phoneNoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.40"
+                android:background="@drawable/squircle_btn"
+                android:backgroundTint="#DE1515"
+                android:drawableLeft="@drawable/phone"
+                android:fontFamily="@font/capriola"
+                android:hint="   Phone No."
+                android:inputType="phone"
                 android:textColor="@android:color/background_light"
                 android:textColorHint="#ffff"
                 android:textSize="20dp" />
@@ -199,8 +201,8 @@
 
             <Button
                 android:id="@+id/homeLocation"
-                android:layout_width="300dp"
-                android:layout_height="55dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="15dp"
@@ -211,8 +213,9 @@
                 android:onClick="getLocation"
                 android:text="Get Home Location"
                 android:textColor="#FBF9F9"
-                android:textSize="25dp"
-                android:textStyle="bold" />
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:padding="15dp"/>
 
             <Button
                 android:id="@+id/signup"
