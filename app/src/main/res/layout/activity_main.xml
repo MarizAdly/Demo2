@@ -32,7 +32,6 @@
                     android:adjustViewBounds="false"
                     android:cropToPadding="false"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/logo"
                     android:layout_gravity="center"/>
             </LinearLayout>
 

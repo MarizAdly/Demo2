@@ -26,6 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,14 +51,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (mAuth.getCurrentUser() != null) {
-           Toast.makeText ( MainActivity.this, "Hi NewComer, Please Register First! ",Toast.LENGTH_LONG ).show ();
-
-        }
-
         setContentView(R.layout.activity_main);
 
         logo = findViewById(R.id.logo);
+
+        Picasso.get ( ).load ( R.drawable.logoo ).into ( logo );
         emailEdit = findViewById(R.id.emailAddEditText);
         passwordEdit = findViewById(R.id.passWord);
         saveLoginCheckBox = findViewById(R.id.saveLoginCheckBox);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance ( );
         DatabaseReference myRef = database.getReference ( "LogingIn_Users" );
-        myRef.child ( mAuth.getCurrentUser ().getUid () ).push().setValue("logging_in_user");
+        myRef.push().setValue("logging_in_user");
 
     }
 
@@ -120,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
-
+ FirebaseUser mUser = mAuth.getCurrentUser ();
                             Intent docIntent = new Intent(MainActivity.this, HomeActivity.class);
-                            docIntent.putExtra("currentUser", mAuth.getCurrentUser().getUid());
+                            docIntent.putExtra ( "cureentUser", mUser );
                             startActivity(docIntent);
                             Toast.makeText(MainActivity.this, "Authentication Succeed.", Toast.LENGTH_SHORT).show();
 

@@ -28,7 +28,6 @@ public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UsersHolder
     private List <User> userList;
     Activity activity;
 
-
     public UsersAdapter ( List <User> userList, Activity activity ) {
         this.activity = activity;
         this.userList = userList;
@@ -36,16 +35,16 @@ public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UsersHolder
 
     @NonNull
     @Override
-    public UsersHolder onCreateViewHolder ( @NonNull ViewGroup viewGroup, int i ) {
-        LayoutInflater inflater = LayoutInflater.from ( viewGroup.getContext ( ) );
-        View view = inflater.inflate ( R.layout.user_item, viewGroup, false );
-        UsersHolder usersHolder = new UsersHolder ( view );
+    public UsersHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from ( parent.getContext ( ) );
+        View view = inflater.inflate ( R.layout.user_item, parent, false );
+        UsersHolder usersHolder= new UsersHolder ( view );
         return usersHolder;
     }
 
     @Override
     public void onBindViewHolder ( @NonNull UsersHolder usersHolder, int position ) {
-usersHolder.useridplayName.setText ( userList.get ( position ).getDisplayName () );
+usersHolder.userDisplayName.setText ( userList.get ( position ).getDisplayName () );
 Picasso.get ().load ( userList.get ( position ).getUserImage () ).into ( usersHolder.userPhoto );
     }
 
@@ -57,23 +56,22 @@ Picasso.get ().load ( userList.get ( position ).getUserImage () ).into ( usersHo
     public class UsersHolder extends ViewHolder {
 
         ImageView userPhoto;
-        TextView useridplayName;
+        TextView userDisplayName;
 
         public UsersHolder ( @NonNull View itemView ) {
             super ( itemView );
 
-            useridplayName = itemView.findViewById ( R.id.userNameList );
+            userDisplayName = itemView.findViewById ( R.id.userNameList );
             userPhoto = itemView.findViewById ( R.id.userProfImg );
-            useridplayName.setOnClickListener ( new View.OnClickListener ( ) {
+            userDisplayName.setOnClickListener ( new View.OnClickListener ( ) {
+    @Override
+    public void onClick ( View view ) {
+        Intent detintent = new Intent ( activity, ProfileActivity.class );
+        detintent.putExtra ( "user", userList.get ( getAdapterPosition ( ) ) );
+        activity.startActivity ( detintent );
+    }
+} );
 
-                @Override
-                public void onClick ( View view ) {
-
-                    Intent intent = new Intent ( activity, ProfileActivity.class );
-                    intent.putExtra ( "users", userList.get ( getAdapterPosition ( ) ) );
-                    activity.startActivity ( intent );
-                }
-            } );
         }
     }
 }

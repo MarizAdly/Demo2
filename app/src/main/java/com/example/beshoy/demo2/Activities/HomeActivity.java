@@ -36,20 +36,24 @@ public class HomeActivity extends AppCompatActivity {
 
     PostAdapter postAdapter;
      private List<Post> postList;
-
-
+    FirebaseUser mUser;
+User user;
 
     @Override
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_home );
 
-        mAuth = FirebaseAuth.getInstance ( );
         mRecView = findViewById ( R.id.postView );
 
         postList = new ArrayList <> ( );
+         Intent intent = getIntent ();
+         user = (User) intent.getSerializableExtra ( "currentUser" );
 
+        mAuth = FirebaseAuth.getInstance ();
+        mUser = mAuth.getCurrentUser ();
         firebaseDatabase = FirebaseDatabase.getInstance ( );
+
         databaseReference = firebaseDatabase.getReference ( "posts" );
         databaseReference.push ( ).setValue ( new Post ( ) );
 
@@ -88,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void signOut ( View view ) {
-        mAuth.signOut ();
+
         FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

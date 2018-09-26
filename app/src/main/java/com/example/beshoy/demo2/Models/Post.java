@@ -21,7 +21,7 @@ public class Post implements Serializable {
         return userName;
     }
 
-    public void setUserName ( String userName ) {
+    public void setUserName ( String displayName ) {
         this.userName = userName;
     }
 

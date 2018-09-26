@@ -19,7 +19,7 @@
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/logo" />
+         />
 
     <TextView
         android:id="@+id/textView2"

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.beshoy.demo2.Adapters.UsersAdapter;
 import com.example.beshoy.demo2.Models.User;
@@ -34,6 +35,7 @@ public class UsersListActivity extends AppCompatActivity {
 
         recView = findViewById ( R.id.recUsersView );
 
+
         FirebaseDatabase database = FirebaseDatabase.getInstance ( );
         DatabaseReference myRef = database.getReference ( "users" );
 
@@ -42,19 +44,18 @@ public class UsersListActivity extends AppCompatActivity {
         myRef.addValueEventListener ( new ValueEventListener ( ) {
             @Override
             public void onDataChange ( DataSnapshot dataSnapshot ) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren ( )) {
-                    User user = dataSnapshot1.getValue ( User.class );
+                for (DataSnapshot userSnapShot : dataSnapshot.getChildren ( )) {
+                    User user = userSnapShot.getValue ( User.class );
                     userList.add ( user );
                     usersAdapter.notifyDataSetChanged ( );
                 }
 
             }
-
             @Override
             public void onCancelled ( @NonNull DatabaseError databaseError ) {
-
+                Toast.makeText ( UsersListActivity.this,databaseError.getMessage (),Toast.LENGTH_LONG ).show ();
             }
-            } );
+            });
 
         usersAdapter = new UsersAdapter ( userList, this );
         recView.setAdapter ( usersAdapter );

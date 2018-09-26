@@ -8,16 +8,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.beshoy.demo2.R;
+import com.squareup.picasso.Picasso;
 
 public class WelcomeActivity extends AppCompatActivity {
     ImageView logo;
     TextView title;
-    private static int SPLASH_TIME_OUT = 2500;
+    private static int SPLASH_TIME_OUT = 3300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        logo = findViewById ( R.id.logo );
+        Picasso.get ().load ( R.drawable.logoo ).into ( logo );
+        title = findViewById ( R.id.textView2 );
         new Handler().postDelayed(new Runnable() {
 
 

@@ -30,8 +30,7 @@ ImageView profilePhoto;
 TextView nameView, phoneView, bdview, addressView;
 TextView nameEdit, phoneEdit, bdEdit, addEdit;
 ImageButton call, msg, location;
-FirebaseUser mUser;
-FirebaseAuth mAuth;
+
     @Override
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate ( savedInstanceState );
@@ -54,36 +53,15 @@ FirebaseAuth mAuth;
         addressView = findViewById ( R.id. addressView  );
         addEdit = findViewById ( R.id.address );
 
+ Intent intent = getIntent ();
+ user = (User ) intent.getSerializableExtra ( "user" ) ;
 
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mRef = database.getReference ( "users"  );
-
-        mRef.child("userId").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                if ( user != null ) {
-                    nameEdit.setText ( user.getDisplayName () );
-                    phoneEdit.setText ( user.getPhoneNo () );
-                    bdEdit.setText ( user.getBirthDate () );
-                    addEdit.setText ( user.getAddress () );
-                    Picasso.get ().load ( user.getUserImage () ).into ( profilePhoto);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-        });
-
-
-
-
+        nameEdit.setText ( user.getDisplayName () );
+        nameEdit.setText ( user.getDisplayName () );
+        phoneEdit.setText ( user.getPhoneNo ());
+        bdEdit.setText ( user.getBirthDate () );
+        addEdit.setText ( user.getBirthDate () );
+        Picasso.get ().load ( user.getUserImage () ).into ( profilePhoto);
     }
 
     public void call ( View view ) {
@@ -107,7 +85,7 @@ FirebaseAuth mAuth;
     }
 
     public void openMaps(double lat,double lng){
-        String geoUri = "http://maps.google.com/maps?q=loc:" + user.getuLat () + "," + user.getUlng ()+ " (" + "location" + ")";
+        String geoUri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng+ " (" + "location" + ")";
         Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(geoUri));
         startActivity(intent);
 

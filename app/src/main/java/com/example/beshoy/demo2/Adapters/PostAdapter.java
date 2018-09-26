@@ -42,8 +42,7 @@ public PostAdapter (List<Post> postList , Activity activity){
 
         LayoutInflater inflater = LayoutInflater.from ( viewGroup.getContext ( ) );
         View view = inflater.inflate ( R.layout.post_item, viewGroup, false );
-        PostHolder postHolder = new PostHolder ( view );
-        return postHolder;
+        return new PostHolder ( view );
     }
 
     @Override

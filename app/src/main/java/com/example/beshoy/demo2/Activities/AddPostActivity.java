@@ -41,7 +41,6 @@ public class AddPostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseStorage storage;
     StorageReference storageReference;
-    FirebaseUser mUser;
 
 
     Post post;
@@ -49,8 +48,8 @@ public class AddPostActivity extends AppCompatActivity {
 
     Uri imageUri;
     private static final int PICK_IMAGE = 100;
-    ImageView postImage, userImage;
-    TextView title, personName;
+    ImageView postImage;
+    TextView title;
     EditText postText;
     ImageButton camera, addpost, cancel;
 
@@ -62,7 +61,7 @@ public class AddPostActivity extends AppCompatActivity {
 
         post = new Post();
     user = new User();
-    mUser = mAuth.getCurrentUser ();
+
 
         title = findViewById(R.id.titleView);
         postText = findViewById(R.id.postText);
@@ -72,9 +71,11 @@ public class AddPostActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel);
 
 
-        Intent addpost = getIntent();
         storage = FirebaseStorage.getInstance ();
         storageReference = storage.getReference ();
+        mAuth = FirebaseAuth.getInstance();
+
+
     }
 
     public void cancelPost(View view) {
@@ -103,13 +104,15 @@ public class AddPostActivity extends AppCompatActivity {
 
     public void addPost(View view) {
 
-        String posttext = postText.getText ().toString ();
+        final String posttext = postText.getText ().toString ();
 
         if ( TextUtils.isEmpty(posttext)) {
             Toast.makeText(getApplicationContext(), "Fill Post Description!", Toast.LENGTH_SHORT).show();
             return;
         }
-        mAuth = FirebaseAuth.getInstance();
+
+        final FirebaseUser mUser = mAuth.getCurrentUser ();
+
          if (imageUri!= null && user!=null || postText != null) {
             final ProgressDialog progressDialog = new ProgressDialog(AddPostActivity.this);
             progressDialog.setTitle("Uploading...");
@@ -127,13 +130,15 @@ public class AddPostActivity extends AppCompatActivity {
                                 public void onSuccess ( Uri uri ) {
                                     FirebaseDatabase database = FirebaseDatabase.getInstance ( );
                                     DatabaseReference myRef = database.getReference ( "posts" );
+
                                     String userId = myRef.push().getKey();
 
-                                    post.setPostText ( postText.getText ( ).toString ( ) );
+                                    post.setPostText ( posttext );
                                     post.setPostPhoto ( uri.toString ( ) );
                                     post.setUserID ( mAuth.getCurrentUser ( ).getUid ( ) );
-                                    post.setUserName ( mUser.getDisplayName ( ) );
+                                    post.setUserName ( mAuth.getCurrentUser ().getDisplayName () );
 
+                                    assert userId != null;
                                     myRef.child ( userId ).setValue ( post );
                                 }
                             } );
