@@ -238,7 +238,9 @@
             android:layout_marginEnd="115dp"
             android:onClick="Home"
             android:src="@drawable/ic_home_white"
-            app:backgroundTint="@android:color/holo_red_dark" />
+            app:backgroundTint="@android:color/holo_red_dark"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="115dp" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabFriends"
@@ -249,7 +251,9 @@
             android:layout_marginStart="115dp"
             android:onClick="friends"
             android:src="@drawable/ic_people_white"
-            app:backgroundTint="@android:color/holo_red_dark" />
+            app:backgroundTint="@android:color/holo_red_dark"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="115dp" />
     </RelativeLayout>
 
 </LinearLayout>

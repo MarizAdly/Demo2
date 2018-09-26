@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -94,16 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent
-            data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            Picasso.get ().load ( imageUri ).into ( profileView );
-        }
-    }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -141,9 +132,6 @@ public class RegisterActivity extends AppCompatActivity {
     double lngLoc;
 
     public void gettingLoc(){
-
-
-
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -184,9 +172,48 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent
+            data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            Picasso.get ().load ( imageUri ).into ( profileView );
+        }
+    }
+
 
     public void signup(View view) {
 
+        String fullname = userNameEdit.getText ().toString ();
+        String emaillAdd = emailAddEdit.getText ().toString ();
+        String phone = phoneNoEdit.getText ().toString ();
+        String address = addressEdit.getText ().toString ();
+        String birthday = bdEdit.getText ().toString ();
+
+        if ( TextUtils.isEmpty(fullname)) {
+            Toast.makeText(getApplicationContext(), "Enter Your Name!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if ( TextUtils.isEmpty(emaillAdd)) {
+            Toast.makeText(getApplicationContext(), "Enter Your Email Address!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if ( TextUtils.isEmpty(phone)) {
+            Toast.makeText(getApplicationContext(), "Enter Your Phone Number!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if ( TextUtils.isEmpty(address)) {
+            Toast.makeText(getApplicationContext(), "Enter Your Home Address!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if ( TextUtils.isEmpty(birthday)) {
+            Toast.makeText(getApplicationContext(), "Enter Your Birth Date!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mAuth.createUserWithEmailAndPassword ( emailAddEdit.getText ( ).toString ( ), passWordEdit.getText ( ).toString ( ) )
                 .addOnCompleteListener ( this, new OnCompleteListener<AuthResult>( ) {
                     @Override
@@ -199,29 +226,37 @@ public class RegisterActivity extends AppCompatActivity {
                                 progressDialog.setTitle("Uploading...");
                                 progressDialog.show();
 
-                                final StorageReference ref = storageReference.child("images/" ).child ( imageUri.getLastPathSegment () );
+                          final StorageReference ref = storageReference.child("images/" ).child ( imageUri.getLastPathSegment () );
                                 ref.putFile(imageUri)
                                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                             @Override
                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                 progressDialog.dismiss();
+                                  ref.getDownloadUrl ().addOnSuccessListener ( new OnSuccessListener <Uri> ( ) {
+                                      @Override
+                                      public void onSuccess ( Uri uri ) {
 
-                                                FirebaseDatabase database = FirebaseDatabase.getInstance ( );
-                                                DatabaseReference myRef = database.getReference ( "users" );
+                                          FirebaseDatabase database = FirebaseDatabase.getInstance ( );
+                                          DatabaseReference myRef = database.getReference ( "users" );
+                                          myRef.push ().getKey ();
+                                          myRef.orderByChild ( "DisplayName" );
 
-                                                user.setDisplayName(userNameEdit.getText().toString());
-                                                user.setBirthDate(bdEdit.getText().toString());
-                                                user.setEmailAddress(emailAddEdit.getText().toString());
-                                                user.setPhoneNo(phoneNoEdit.getText().toString());
-                                                user.setAddress ( addressEdit.getText ().toString () );
-                                                user.setUserImage ( ref.toString () );
-                                                user.setUID(mAuth.getCurrentUser().getUid());
-                                                user.setuLat(latLoc);
-                                                user.setUlng(lngLoc);
+                                          user.setDisplayName(userNameEdit.getText().toString());
+                                          user.setBirthDate(bdEdit.getText().toString());
+                                          user.setEmailAddress(emailAddEdit.getText().toString());
+                                          user.setPhoneNo(phoneNoEdit.getText().toString());
+                                          user.setAddress ( addressEdit.getText ().toString () );
+                                          user.setUserImage (uri.toString () );
+                                          user.setUID(mAuth.getCurrentUser().getUid());
+                                          user.setuLat(latLoc);
+                                          user.setUlng(lngLoc);
 
-                                                myRef.push().setValue(user);
+                                          myRef.setValue(user);
 
 
+
+                                      }
+                                  } );
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {

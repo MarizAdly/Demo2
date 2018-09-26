@@ -10,10 +10,26 @@ public class User implements Serializable {
     private String EmailAddress;
     private String PhoneNo;
     private String UID;
-    private  String Address;
+    private String Address;
     private String UserImage;
     private double uLat;
     private double ulng;
+
+    public User (){
+
+    }
+
+    public User ( String displayName, String birthDate, String emailAddress, String phoneNo, String UID, String address, String userImage, double uLat, double ulng ) {
+        this.DisplayName = displayName;
+        this.BirthDate = birthDate;
+        this.EmailAddress = emailAddress;
+        this.PhoneNo = phoneNo;
+        this.UID = UID;
+        this.Address = address;
+        this.UserImage = userImage;
+        this.uLat = uLat;
+        this.ulng = ulng;
+    }
 
 
     public String getAddress ( ) {
@@ -23,8 +39,6 @@ public class User implements Serializable {
     public void setAddress ( String address ) {
         Address = address;
     }
-
-
 
     public String getUserImage() {
         return UserImage;

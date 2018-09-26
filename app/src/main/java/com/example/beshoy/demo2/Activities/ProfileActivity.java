@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.beshoy.demo2.Models.User;
 import com.example.beshoy.demo2.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,8 @@ ImageView profilePhoto;
 TextView nameView, phoneView, bdview, addressView;
 TextView nameEdit, phoneEdit, bdEdit, addEdit;
 ImageButton call, msg, location;
+FirebaseUser mUser;
+FirebaseAuth mAuth;
     @Override
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate ( savedInstanceState );
@@ -50,32 +54,34 @@ ImageButton call, msg, location;
         addressView = findViewById ( R.id. addressView  );
         addEdit = findViewById ( R.id.address );
 
-        user = new User ();
+
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mRef = database.getReference ( "users" );
+        DatabaseReference mRef = database.getReference ( "users"  );
 
-       mRef.addValueEventListener ( new ValueEventListener ( ) {
-           @Override
-           public void onDataChange ( DataSnapshot dataSnapshot ) {
-            user = dataSnapshot.getValue (User.class);
+        mRef.child("userId").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
 
-               if ( user != null ) {
-                   nameEdit.setText ( user.getDisplayName () );
-                   phoneEdit.setText ( user.getPhoneNo () );
-                   bdEdit.setText ( user.getBirthDate () );
-                   addEdit.setText ( user.getAddress () );
-                   Picasso.get ().load ( user.getUserImage () ).into ( profilePhoto);
-               }
+                if ( user != null ) {
+                    nameEdit.setText ( user.getDisplayName () );
+                    phoneEdit.setText ( user.getPhoneNo () );
+                    bdEdit.setText ( user.getBirthDate () );
+                    addEdit.setText ( user.getAddress () );
+                    Picasso.get ().load ( user.getUserImage () ).into ( profilePhoto);
+                }
 
-           }
+            }
 
-           @Override
-           public void onCancelled ( @NonNull DatabaseError databaseError ) {
+            @Override
+            public void onCancelled(DatabaseError error) {
 
-           }
-       } );
+            }
+        });
+
+
 
 
     }

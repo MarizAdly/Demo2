@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.beshoy.demo2.Models.User;
 import com.example.beshoy.demo2.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Button signIn ;
     TextView forget, signUpp;
 
+
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private Boolean saveLogin;
@@ -44,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (mAuth.getCurrentUser() != null) {
+           Toast.makeText ( MainActivity.this, "Hi NewComer, Please Register First! ",Toast.LENGTH_LONG ).show ();
+
+        }
+
         setContentView(R.layout.activity_main);
 
         logo = findViewById(R.id.logo);
@@ -58,9 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance ( );
 
+
         FirebaseDatabase database = FirebaseDatabase.getInstance ( );
-        DatabaseReference myRef = database.getReference ( "users" );
-        myRef.push().setValue("user");
+        DatabaseReference myRef = database.getReference ( "LogingIn_Users" );
+        myRef.child ( mAuth.getCurrentUser ().getUid () ).push().setValue("logging_in_user");
 
     }
 
@@ -90,7 +100,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void logIn(View view) {
-        mAuth.signInWithEmailAndPassword(emailEdit.getText().toString(), passwordEdit.getText().toString())
+
+        String email = emailEdit.getText ().toString ();
+        String password = passwordEdit.getText ().toString ();
+
+        if ( TextUtils.isEmpty(email)) {
+            Toast.makeText(getApplicationContext(), "Enter Your Email Address!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if ( TextUtils.isEmpty(password)) {
+            Toast.makeText(getApplicationContext(), "Enter Your Password!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

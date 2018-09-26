@@ -27,56 +27,49 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class PostAdapter extends  RecyclerView.Adapter<PostAdapter.ViewHolder> {
- Activity activity;
-private List<Post> postList;
+public class PostAdapter extends  RecyclerView.Adapter< PostAdapter.PostHolder> {
+ List<Post> postList;
+Activity activity;
 
-
-
-public PostAdapter( List <Post> postList,Activity activity ) {
-       this.activity = activity;
-      this.postList = postList;
-
-        }
+public PostAdapter (List<Post> postList , Activity activity){
+    this.postList = postList;
+    this.activity = activity;
+}
 
     @NonNull
     @Override
-    public PostAdapter.ViewHolder onCreateViewHolder ( @NonNull ViewGroup parent, int i ) {
-        LayoutInflater inflater = LayoutInflater.from ( parent.getContext ( ) );
-        View view = inflater.inflate ( R.layout.post_item, parent, false );
-        ViewHolder viewholder = new ViewHolder ( view );
-        return viewholder;
+    public PostHolder onCreateViewHolder ( @NonNull ViewGroup viewGroup, int i ) {
+
+        LayoutInflater inflater = LayoutInflater.from ( viewGroup.getContext ( ) );
+        View view = inflater.inflate ( R.layout.post_item, viewGroup, false );
+        PostHolder postHolder = new PostHolder ( view );
+        return postHolder;
     }
 
     @Override
-    public void onBindViewHolder ( @NonNull PostAdapter.ViewHolder holder, int position ) {
-holder.postText.setText ( postList.get ( position ).getPostText () );
-Picasso.get ().load ( postList.get ( position ).getPostPhoto () ).into ( holder.postImage );
-
-
-
+    public void onBindViewHolder ( @NonNull PostHolder postHolder, int i ) {
+postHolder.userdiplayname.setText ( postList.get ( i ).getUserName () );
+Picasso.get ().load ( postList.get ( i ).getPostPhoto () ).into ( postHolder.postUrl );
+postHolder.postdesc.setText ( postList.get ( i ).getPostText () );
     }
 
     @Override
     public int getItemCount ( ) {
         return postList.size ();
+
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class PostHolder extends ViewHolder {
 
-    EditText postText;
-    ImageView  postImage;
-    TextView userName;
+    ImageView postUrl;
+    TextView userdiplayname, postdesc;
 
-
-        public ViewHolder ( @NonNull View itemView ) {
+        public PostHolder ( @NonNull View itemView ) {
             super ( itemView );
-
-            postImage = itemView.findViewById ( R.id.postPhoto );
-            postText = itemView.findViewById ( R.id.postText );
-            userName = itemView.findViewById ( R.id.cUserName );
+            postdesc = itemView.findViewById ( R.id.postText );
+            postUrl = itemView.findViewById ( R.id.postPhoto );
+            userdiplayname = itemView.findViewById ( R.id.cUserName );
 
         }
-
     }
 }

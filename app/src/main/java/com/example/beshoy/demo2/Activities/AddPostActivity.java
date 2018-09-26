@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.beshoy.demo2.Models.Post;
 import com.example.beshoy.demo2.Models.User;
 import com.example.beshoy.demo2.R;
@@ -20,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +41,7 @@ public class AddPostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseStorage storage;
     StorageReference storageReference;
-    FirebaseDatabase database;
+    FirebaseUser mUser;
 
 
     Post post;
@@ -59,6 +62,7 @@ public class AddPostActivity extends AppCompatActivity {
 
         post = new Post();
     user = new User();
+    mUser = mAuth.getCurrentUser ();
 
         title = findViewById(R.id.titleView);
         postText = findViewById(R.id.postText);
@@ -93,33 +97,47 @@ public class AddPostActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             imageUri = data.getData();
-            Picasso.get ().load(imageUri).into(postImage);
+           Picasso.get ().load ( imageUri ).into ( postImage );
         }
     }
 
     public void addPost(View view) {
+
+        String posttext = postText.getText ().toString ();
+
+        if ( TextUtils.isEmpty(posttext)) {
+            Toast.makeText(getApplicationContext(), "Fill Post Description!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mAuth = FirebaseAuth.getInstance();
-        if (imageUri!= null && user!=null || postText != null) {
+         if (imageUri!= null && user!=null || postText != null) {
             final ProgressDialog progressDialog = new ProgressDialog(AddPostActivity.this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            final StorageReference ref = storageReference.child("uploads/" ).child(imageUri.getLastPathSegment ());
+             final StorageReference ref = storageReference.child("uploads/" ).child(imageUri.getLastPathSegment ());
             ref.putFile(imageUri)
 
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess( final UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss ( );
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference("posts");
+                            ref.getDownloadUrl ().addOnSuccessListener ( new OnSuccessListener <Uri> ( ) {
+                                @Override
+                                public void onSuccess ( Uri uri ) {
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance ( );
+                                    DatabaseReference myRef = database.getReference ( "posts" );
+                                    String userId = myRef.push().getKey();
 
-                            post.setPostText(postText.getText().toString());
-                            post.setPostPhoto (ref.toString ());
-                            post.setUserID (mAuth.getCurrentUser ().getUid ());
+                                    post.setPostText ( postText.getText ( ).toString ( ) );
+                                    post.setPostPhoto ( uri.toString ( ) );
+                                    post.setUserID ( mAuth.getCurrentUser ( ).getUid ( ) );
+                                    post.setUserName ( mUser.getDisplayName ( ) );
 
-                            myRef.push ().setValue ( post );
-    }
+                                    myRef.child ( userId ).setValue ( post );
+                                }
+                            } );
+                        }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override

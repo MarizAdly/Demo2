@@ -32,10 +32,11 @@ public class Post implements Serializable {
 
     }
 
-    public Post(String postDesc, String imgURL , String UID ) {
-        postText = postDesc;
-        postPhoto = imgURL;
-        userID = UID;
+    public Post ( String postPhoto, String postText, String userName, String userID ) {
+        this.postPhoto = postPhoto;
+        this.postText = postText;
+        this.userName = userName;
+        this.userID = userID;
     }
 
     public String getUserID() {
