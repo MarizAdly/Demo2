@@ -131,7 +131,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess ( Uri uri ) {
                                     FirebaseDatabase database = FirebaseDatabase.getInstance ( );
-                                    DatabaseReference myRef = database.getReference ( "posts" );
+                                    DatabaseReference myRef = database.getReference ( "users" );
 
                                     String userId = myRef.push().getKey();
 

@@ -60,7 +60,7 @@ ImageButton call, msg, location;
         nameEdit.setText ( user.getDisplayName () );
         phoneEdit.setText ( user.getPhoneNo ());
         bdEdit.setText ( user.getBirthDate () );
-        addEdit.setText ( user.getBirthDate () );
+        addEdit.setText ( user.getAddress () );
         Picasso.get ().load ( user.getUserImage () ).into ( profilePhoto);
     }
 
