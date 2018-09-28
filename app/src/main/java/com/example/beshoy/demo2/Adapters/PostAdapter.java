@@ -19,8 +19,11 @@ import com.example.beshoy.demo2.Models.User;
 import com.example.beshoy.demo2.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -30,6 +33,7 @@ import java.util.List;
 public class PostAdapter extends  RecyclerView.Adapter< PostAdapter.PostHolder> {
  List<Post> postList;
 Activity activity;
+
 
 public PostAdapter (List<Post> postList , Activity activity){
     this.postList = postList;
@@ -62,12 +66,18 @@ postHolder.postdesc.setText ( postList.get ( i ).getPostText () );
 
     ImageView postUrl;
     TextView userdiplayname, postdesc;
+    User user;
+
+
 
         public PostHolder ( @NonNull View itemView ) {
             super ( itemView );
             postdesc = itemView.findViewById ( R.id.postText );
             postUrl = itemView.findViewById ( R.id.postPhoto );
             userdiplayname = itemView.findViewById ( R.id.cUserName );
+
+
+
 
         }
     }

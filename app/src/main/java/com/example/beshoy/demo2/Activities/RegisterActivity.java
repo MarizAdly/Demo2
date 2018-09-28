@@ -60,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     StorageReference storageReference;
     private FirebaseAuth mAuth;
 
+
     User user;
     Uri imageUri;
 
@@ -217,12 +218,12 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText ( getApplicationContext ( ), "Enter Your Birth Date!", Toast.LENGTH_SHORT ).show ( );
             return;
         }
-        mAuth=FirebaseAuth.getInstance ();
+        mAuth = FirebaseAuth.getInstance ( );
         mAuth.createUserWithEmailAndPassword ( emailAddEdit.getText ( ).toString ( ), passWordEdit.getText ( ).toString ( ) )
                 .addOnCompleteListener ( this, new OnCompleteListener <AuthResult> ( ) {
                     @Override
                     public void onComplete ( @NonNull Task <AuthResult> task ) {
-                        if ( task.isSuccessful ( ) )
+                        if ( task.isSuccessful ( ) ) {
 
                             if ( imageUri != null ) {
                                 final ProgressDialog progressDialog = new ProgressDialog ( RegisterActivity.this );
@@ -238,7 +239,6 @@ public class RegisterActivity extends AppCompatActivity {
                                                 ref.getDownloadUrl ( ).addOnSuccessListener ( new OnSuccessListener <Uri> ( ) {
                                                     @Override
                                                     public void onSuccess ( Uri uri ) {
-
                                                         FirebaseDatabase database = FirebaseDatabase.getInstance ( );
                                                         DatabaseReference myRef = database.getReference ( "users" );
 
@@ -257,7 +257,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                         assert userId != null;
                                                         myRef.child ( userId ).setValue ( user );
-                                                        }
+                                                    }
                                                 } );
                                             }
                                         } )
@@ -280,25 +280,24 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText ( RegisterActivity.this, "Authentication succeeded.",
                                         Toast.LENGTH_SHORT ).show ( );
 
-                                Intent intent = new Intent ( RegisterActivity.this, HomeActivity.class );
-                                intent.putExtra ( "user", user);
+                                Intent intent = new Intent ( RegisterActivity.this, UsersListActivity.class );
+                                intent.putExtra ( "user", user );
                                 startActivity ( intent );
+
+                            }
+
+                        } else
+
+                        {
+
+                            Toast.makeText ( RegisterActivity.this, "Authentication failed." + task.getException ( ).toString ( ),
+                                    Toast.LENGTH_SHORT ).show ( );
+
                         }
-
-                        else
-
-                    {
-
-                        Toast.makeText ( RegisterActivity.this, "Authentication failed." + task.getException ( ).toString ( ),
-                                Toast.LENGTH_SHORT ).show ( );
-
                     }
 
-                }
-                });
+                } );
     }
-
-
     public void back(View view) {
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
@@ -316,5 +315,6 @@ public class RegisterActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
+
 
 }

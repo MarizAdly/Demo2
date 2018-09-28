@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         logo = findViewById(R.id.logo);
 
-        Picasso.get ( ).load ( R.drawable.logoo ).into ( logo );
+        Picasso.get ( ).load ( R.drawable.logo ).into ( logo );
         emailEdit = findViewById(R.id.emailAddEditText);
         passwordEdit = findViewById(R.id.passWord);
         saveLoginCheckBox = findViewById(R.id.saveLoginCheckBox);
@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance ( );
-        DatabaseReference myRef = database.getReference ( "LogingIn_Users" );
+        DatabaseReference myRef = database.getReference ( "LogingIn_Users" )
+                ;
         myRef.push().setValue("logging_in_user");
 
     }
@@ -113,16 +114,16 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Enter Your Password!", Toast.LENGTH_SHORT).show();
             return;
         }
-
+final FirebaseUser mUser = mAuth.getCurrentUser ();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
- FirebaseUser mUser = mAuth.getCurrentUser ();
-                            Intent docIntent = new Intent(MainActivity.this, HomeActivity.class);
-                            docIntent.putExtra ( "cureentUser", mUser );
+
+                            Intent docIntent = new Intent(MainActivity.this, UsersListActivity.class);
+                            docIntent.putExtra ( "cUser", mUser);
                             startActivity(docIntent);
                             Toast.makeText(MainActivity.this, "Authentication Succeed.", Toast.LENGTH_SHORT).show();
 
@@ -141,10 +142,12 @@ public class MainActivity extends AppCompatActivity {
     public void signUp(View view) {
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
+        finish ();
     }
 
     public void forget(View view) {
 Intent passIntent = new Intent(MainActivity.this, ForgetPassActivity.class);
 startActivity(passIntent);
+finish ();
     }
 }

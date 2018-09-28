@@ -5,13 +5,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
->
+android:padding="5dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_margin="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userProfImg"
@@ -23,10 +18,10 @@
             android:id="@+id/userNameList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="5dp"
             android:hint="DisplayName"
             android:textColor="#ff000000"
             android:textSize="22dp" />
     </LinearLayout>
 
-</LinearLayout>

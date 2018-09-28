@@ -60,7 +60,7 @@ public class AddPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_post);
 
         post = new Post();
-    user = new User();
+        user = new User();
 
 
         title = findViewById(R.id.titleView);
@@ -74,6 +74,8 @@ public class AddPostActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance ();
         storageReference = storage.getReference ();
         mAuth = FirebaseAuth.getInstance();
+        Intent  intent = getIntent ();
+        user = (User) intent.getSerializableExtra ( "cUser" );
 
 
     }
@@ -98,7 +100,7 @@ public class AddPostActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             imageUri = data.getData();
-           Picasso.get ().load ( imageUri ).into ( postImage );
+            Picasso.get ().load ( imageUri ).into ( postImage );
         }
     }
 
@@ -111,14 +113,14 @@ public class AddPostActivity extends AppCompatActivity {
             return;
         }
 
-        final FirebaseUser mUser = mAuth.getCurrentUser ();
 
-         if (imageUri!= null && user!=null || postText != null) {
+
+        if (imageUri!= null && user!=null || postText != null) {
             final ProgressDialog progressDialog = new ProgressDialog(AddPostActivity.this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-             final StorageReference ref = storageReference.child("uploads/" ).child(imageUri.getLastPathSegment ());
+            final StorageReference ref = storageReference.child("uploads/" ).child(imageUri.getLastPathSegment ());
             ref.putFile(imageUri)
 
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -136,7 +138,9 @@ public class AddPostActivity extends AppCompatActivity {
                                     post.setPostText ( posttext );
                                     post.setPostPhoto ( uri.toString ( ) );
                                     post.setUserID ( mAuth.getCurrentUser ( ).getUid ( ) );
-                                    post.setUserName ( mAuth.getCurrentUser ().getDisplayName () );
+                                    post.setUserName ( mAuth.getCurrentUser ( ).getDisplayName () );
+
+
 
                                     assert userId != null;
                                     myRef.child ( userId ).setValue ( post );
@@ -162,6 +166,7 @@ public class AddPostActivity extends AppCompatActivity {
 
             Intent intent = new Intent ( AddPostActivity.this, HomeActivity.class );
             intent.putExtra ( "posts", post );
+            intent.putExtra ( "currentUser", user );
             startActivity ( intent );
 
         }

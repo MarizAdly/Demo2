@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
      private List<Post> postList;
     FirebaseUser mUser;
 User user;
+Post post;
 
     @Override
     protected void onCreate ( Bundle savedInstanceState ) {
@@ -47,9 +48,9 @@ User user;
         mRecView = findViewById ( R.id.postView );
 
         postList = new ArrayList <> ( );
-         Intent intent = getIntent ();
-         user = (User) intent.getSerializableExtra ( "currentUser" );
 
+        Intent intent = getIntent ();
+        user = (User) intent.getSerializableExtra ( "currentUser" );
         mAuth = FirebaseAuth.getInstance ();
         mUser = mAuth.getCurrentUser ();
         firebaseDatabase = FirebaseDatabase.getInstance ( );
@@ -64,6 +65,8 @@ User user;
                     Post posts = postSnapshot.getValue ( Post.class );
                     postList.add ( posts );
                     postAdapter.notifyDataSetChanged ( );
+
+
                 }
             }
             @Override
@@ -84,15 +87,19 @@ User user;
         Intent addIntent = new Intent ( HomeActivity.this, AddPostActivity.class);
         startActivity ( addIntent );
 
+
     }
 
     public void friends ( View view ) {
         Intent addIntent = new Intent ( HomeActivity.this,UsersListActivity.class);
         startActivity ( addIntent );
+
     }
 
     public void signOut ( View view ) {
 
+        startActivity(new Intent(HomeActivity.this, MainActivity.class));
+        finish();
         FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

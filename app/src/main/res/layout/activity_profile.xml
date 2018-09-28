@@ -111,7 +111,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="Name: "
                 android:textSize="20dp"
-                android:fontFamily="@font/capriola"
+
                 android:textColor="#F000"/>
 
             <TextView
@@ -119,7 +119,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="  "
-                android:fontFamily="@font/capriola"
                 android:textSize="25dp"
                 android:textColor="#F000"
                 android:layout_marginTop="20dp"
@@ -141,7 +140,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="Phone: "
                 android:textSize="20dp"
-                android:fontFamily="@font/capriola"
+
                 android:textColor="#F000"/>
 
             <TextView
@@ -149,7 +148,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="  "
-                android:fontFamily="@font/capriola"
                 android:textSize="25dp"
                 android:textColor="#F000"
                 android:layout_marginTop="20dp"
@@ -173,7 +171,6 @@
                 android:layout_marginLeft="10dp"
                 android:text="Birth Date: "
                 android:textSize="20dp"
-                android:fontFamily="@font/capriola"
                 android:textColor="#F000"/>
 
             <TextView
@@ -181,7 +178,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="  "
-                android:fontFamily="@font/capriola"
                 android:textSize="25dp"
                 android:textColor="#F000"
                 android:layout_marginTop="20dp"
@@ -205,7 +201,6 @@
                 android:layout_marginLeft="10dp"
                 android:text="Address: "
                 android:textSize="20dp"
-                android:fontFamily="@font/capriola"
                 android:textColor="#F000"/>
 
             <TextView
@@ -213,7 +208,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="  "
-                android:fontFamily="@font/capriola"
                 android:textSize="25dp"
                 android:textColor="#F000"
                 android:layout_marginTop="20dp"
@@ -223,37 +217,30 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_gravity="center"
+        >
 
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="115dp"
             android:onClick="Home"
             android:src="@drawable/ic_home_white"
             app:backgroundTint="@android:color/holo_red_dark"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="115dp" />
+           android:layout_marginRight="20dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabFriends"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="115dp"
             android:onClick="friends"
             android:src="@drawable/ic_people_white"
             app:backgroundTint="@android:color/holo_red_dark"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="115dp" />
-    </RelativeLayout>
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
 
 </LinearLayout>

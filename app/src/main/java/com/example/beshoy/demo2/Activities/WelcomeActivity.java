@@ -21,7 +21,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         logo = findViewById ( R.id.logo );
-        Picasso.get ().load ( R.drawable.logoo ).into ( logo );
+        Picasso.get ().load ( R.drawable.logo ).into ( logo );
         title = findViewById ( R.id.textView2 );
         new Handler().postDelayed(new Runnable() {
 

@@ -14,11 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.beshoy.demo2.Activities.ProfileActivity;
-import com.example.beshoy.demo2.Activities.UsersListActivity;
-import com.example.beshoy.demo2.Models.Post;
 import com.example.beshoy.demo2.Models.User;
 import com.example.beshoy.demo2.R;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -69,6 +66,7 @@ Picasso.get ().load ( userList.get ( position ).getUserImage () ).into ( usersHo
         Intent detintent = new Intent ( activity, ProfileActivity.class );
         detintent.putExtra ( "user", userList.get ( getAdapterPosition ( ) ) );
         activity.startActivity ( detintent );
+        activity.finish ( );
     }
 } );
 

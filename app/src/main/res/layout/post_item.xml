@@ -13,16 +13,14 @@
     android:id="@+id/cUserName"
     android:textColor="#f000"
     android:hint="DisplayName"
-    android:fontFamily="@font/capriola"
         android:textSize="25dp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/postText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:fontFamily="@font/capriola"
         android:hint="Description"
         android:textSize="20dp"
         android:textColor="#f000" />

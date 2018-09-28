@@ -52,8 +52,7 @@
         android:textAllCaps="false"
         android:textColor="#f000"
         android:textSize="30sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/capriola" />
+        android:textStyle="bold" />
 
 
 
@@ -69,7 +68,6 @@
         android:alpha="0.30"
         android:background="@drawable/squircle_btn"
         android:backgroundTint="#DE1515"
-        android:fontFamily="@font/capriola"
         android:hint="Enter Your Email Address"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
@@ -85,7 +83,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="@drawable/round_btn"
-        android:fontFamily="@font/capriola"
+
         android:onClick="sendEmail"
         android:text="Send"
         android:textColor="#fff"
