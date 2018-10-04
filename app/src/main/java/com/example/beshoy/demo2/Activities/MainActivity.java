@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void logIn(View view) {
 
-        String email = emailEdit.getText ().toString ();
+        final String email = emailEdit.getText ().toString ();
         String password = passwordEdit.getText ().toString ();
 
         if ( TextUtils.isEmpty(email)) {
@@ -122,7 +122,7 @@ final FirebaseUser mUser = mAuth.getCurrentUser ();
 
                         if (task.isSuccessful()) {
 
-                            Intent docIntent = new Intent(MainActivity.this, UsersListActivity.class);
+                            Intent docIntent = new Intent(MainActivity.this, UsersActivity.class);
                             docIntent.putExtra ( "cUser", mUser);
                             startActivity(docIntent);
                             Toast.makeText(MainActivity.this, "Authentication Succeed.", Toast.LENGTH_SHORT).show();

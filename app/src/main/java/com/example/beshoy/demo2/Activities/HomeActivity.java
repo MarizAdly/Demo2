@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.beshoy.demo2.Adapters.PostAdapter;
@@ -49,8 +50,7 @@ Post post;
 
         postList = new ArrayList <> ( );
 
-        Intent intent = getIntent ();
-        user = (User) intent.getSerializableExtra ( "currentUser" );
+
         mAuth = FirebaseAuth.getInstance ();
         mUser = mAuth.getCurrentUser ();
         firebaseDatabase = FirebaseDatabase.getInstance ( );
@@ -74,11 +74,14 @@ Post post;
                 Toast.makeText ( HomeActivity.this,databaseError.getMessage (),Toast.LENGTH_LONG ).show ();
             }
 
-        } );
+       } );
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( this );
+        linearLayoutManager.setReverseLayout ( true );
+        linearLayoutManager.setStackFromEnd (true);
         postAdapter = new PostAdapter ( postList, this );
         mRecView.setAdapter ( postAdapter );
-        mRecView.setLayoutManager ( new LinearLayoutManager( this ) );
+        mRecView.setLayoutManager ( linearLayoutManager );
 
     }
 

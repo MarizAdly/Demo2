@@ -2,11 +2,9 @@ package com.example.beshoy.demo2.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,32 +12,25 @@ import android.widget.Toast;
 
 import com.example.beshoy.demo2.Models.User;
 import com.example.beshoy.demo2.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfActivity extends AppCompatActivity {
 
-User user;
-ImageView profilePhoto;
-TextView nameView, phoneView, bdview, addressView;
-TextView nameEdit, phoneEdit, bdEdit, addEdit;
-ImageButton call, msg, location;
+    User user;
+    ImageView profilePhoto;
+    TextView nameView, phoneView, bdview, addressView;
+    TextView nameEdit, phoneEdit, bdEdit, addEdit;
+    ImageButton call, msg;
 
     @Override
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate ( savedInstanceState );
-        setContentView ( R.layout.activity_profile );
+        setContentView ( R.layout.activity_prof );
 
         profilePhoto = findViewById ( R.id.profileView );
         call = findViewById ( R.id.callBtn );
         msg = findViewById ( R.id.msgBtn );
-        location = findViewById ( R.id.locationBtn );
+
 
         nameView = findViewById ( R.id.nameView );
         nameEdit = findViewById ( R.id.name );
@@ -53,8 +44,8 @@ ImageButton call, msg, location;
         addressView = findViewById ( R.id. addressView  );
         addEdit = findViewById ( R.id.address );
 
- Intent intent = getIntent ();
- user = (User ) intent.getSerializableExtra ( "user" ) ;
+        Intent intent = getIntent ();
+        user = (User ) intent.getSerializableExtra ( "user" ) ;
 
         nameEdit.setText ( user.getDisplayName () );
         nameEdit.setText ( user.getDisplayName () );
@@ -80,24 +71,15 @@ ImageButton call, msg, location;
         }
     }
 
-    public void locate ( View view ) {
-        openMaps(user.getuLat (), user.getUlng ());
-    }
-
-    public void openMaps(double lat,double lng){
-        String geoUri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng+ " (" + "location" + ")";
-        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(geoUri));
-        startActivity(intent);
-
-    }
 
     public void Home ( View view ) {
-        Intent intent = new Intent ( ProfileActivity.this, HomeActivity.class );
+        Intent intent = new Intent ( ProfActivity.this, HomeActivity.class );
         startActivity ( intent );
     }
 
     public void friends ( View view ) {
-        Intent intent = new Intent ( ProfileActivity.this, UsersListActivity.class );
+        Intent intent = new Intent ( ProfActivity.this, UsersActivity.class );
         startActivity ( intent );
     }
 }
+

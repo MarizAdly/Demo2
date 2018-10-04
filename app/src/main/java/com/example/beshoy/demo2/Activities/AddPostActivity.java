@@ -129,19 +129,28 @@ public class AddPostActivity extends AppCompatActivity {
                             progressDialog.dismiss ( );
                             ref.getDownloadUrl ().addOnSuccessListener ( new OnSuccessListener <Uri> ( ) {
                                 @Override
-                                public void onSuccess ( Uri uri ) {
+                                public void onSuccess ( final Uri uri ) {
                                     FirebaseDatabase database = FirebaseDatabase.getInstance ( );
-                                    DatabaseReference myRef = database.getReference ( "users" );
+                                    DatabaseReference myRef = database.getReference ( "posts" ).child ( post.getUserID () );
 
                                     String userId = myRef.push().getKey();
 
-                                    post.setPostText ( posttext );
-                                    post.setPostPhoto ( uri.toString ( ) );
-                                    post.setUserID ( mAuth.getCurrentUser ( ).getUid ( ) );
-                                    post.setUserName ( mAuth.getCurrentUser ( ).getDisplayName () );
+                                    myRef.addValueEventListener ( new ValueEventListener ( ) {
+                                        @Override
+                                        public void onDataChange ( @NonNull DataSnapshot dataSnapshot ) {
+                                            post.setPostText ( posttext );
+                                            post.setPostPhoto ( uri.toString ( ) );
+                                            post.setUserID ( mAuth.getCurrentUser ( ).getUid ( ) );
 
+                                            user = dataSnapshot.getValue (User.class);
+                                            post.setUserName ( dataSnapshot.child ( "displayName" ).toString () );
+                                        }
 
+                                        @Override
+                                        public void onCancelled ( @NonNull DatabaseError databaseError ) {
 
+                                        }
+                                    } );
                                     assert userId != null;
                                     myRef.child ( userId ).setValue ( post );
                                 }
